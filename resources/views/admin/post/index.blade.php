@@ -12,8 +12,8 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="m-b-30">
-                            <button id="addToTable" class="btn btn-primary waves-effect waves-light">Add <i
-                                    class="fa fa-plus"></i></button>
+                            <a href="{{route('post.create')}}" id="addToTable" class="btn btn-primary waves-effect waves-light">ارسال پست جدید <i
+                                    class="fa fa-plus"></i></a>
                         </div>
                     </div>
                 </div>
@@ -58,12 +58,15 @@
                                         </th>
                                         <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 99px;"
                                             aria-label="Actions">Actions
+                                        </th> <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 99px;"
+                                            aria-label="Actions">Actions
                                         </th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($post as $po)
                                         <tr class="gradeA odd" role="row">
+                                            <td class="sorting_1">{{$po->id}}</td>
                                             <td class="sorting_1">{{$po->title}}</td>
                                             <td>{{ Illuminate\Support\Str::limit($po->description, 20) }}</td>
                                             <td>{{$po->user_id}}</td>
@@ -72,7 +75,7 @@
                                                         class="fa fa-save"></i></a>
                                                 <a href="#" class="hidden on-editing cancel-row"><i
                                                         class="fa fa-times"></i></a>
-                                                <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                                <a href="{{route('post.edit', $po->id)}}" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
                                                 <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
                                             </td>
                                         </tr>

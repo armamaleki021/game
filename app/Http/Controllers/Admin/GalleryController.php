@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Gallery;
 use Illuminate\Http\Request;
 
 class GalleryController extends Controller
@@ -14,7 +15,9 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        //
+        $title='گالری تصاویر';
+        $gallery=Gallery::paginate(15);
+        return view('admin.gallery.index',compact('title','gallery'));
     }
 
     /**

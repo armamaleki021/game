@@ -5,5 +5,5 @@
 @endsection
 
 @section('content')
-    dd
+    index admin panel
 @endsection

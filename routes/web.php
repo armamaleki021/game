@@ -22,6 +22,9 @@ Auth::routes();
 
 Route::prefix('admin')->namespace('Admin')->middleware('is_admin')->group(function () {
     Route::resource('/', 'AdminController');
+    Route::resource('/post', 'PostController');
+    Route::resource('/gallery', 'GalleryController');
+    Route::resource('/category', 'CategoryController');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

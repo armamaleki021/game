@@ -5,7 +5,6 @@
 @endsection
 
 @section('content')
-
     <div class="col-sm-12">
         <div class="panel">
             <div class="panel-body">
@@ -62,11 +61,11 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($post as $po)
+                                    @foreach($gallery as $gal)
                                         <tr class="gradeA odd" role="row">
-                                            <td class="sorting_1">{{$po->title}}</td>
-                                            <td>{{ Illuminate\Support\Str::limit($po->description, 20) }}</td>
-                                            <td>{{$po->user_id}}</td>
+                                            <td class="sorting_1">{{$gal->title}}</td>
+                                            <td>{{ Illuminate\Support\Str::limit($gal->description, 20) }}</td>
+                                            <td>{{$gal->user_id}}</td>
                                             <td class="actions">
                                                 <a href="#" class="hidden on-editing save-row"><i
                                                         class="fa fa-save"></i></a>
@@ -87,14 +86,13 @@
                                      aria-live="polite">Showing 1 to 10 of 57 entries
                                 </div>
                             </div>
-                            {{$post->links()}}
+                            {{$gallery->links()}}
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- end: panel body -->
+            <!-- end: panel body -->
 
-    </div> <!-- end panel -->
+        </div> <!-- end panel -->
     </div>
 @endsection

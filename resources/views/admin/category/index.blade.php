@@ -69,12 +69,15 @@
                                             <td>{{$cat->user->name}}</td>
                                             <td>{{$cat->gallery->title}}</td>
                                             <td class="actions">
-                                                <a href="#" class="hidden on-editing save-row"><i
-                                                        class="fa fa-save"></i></a>
-                                                <a href="#" class="hidden on-editing cancel-row"><i
-                                                        class="fa fa-times"></i></a>
-                                                <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-                                                <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+
+                                                <a href="{{route('category.edit',$cat->id)}}" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+
+                                                <a onclick="getElementById('category-delete-{{$cat->id}}').submit()" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+
+                                                <form action="{{route('category.destroy',$cat->id)}}" id="category-delete-{{$cat->id}}" method="post">
+                                                    @method('delete')
+                                                    @csrf
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

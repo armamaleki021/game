@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CategoryController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $title = 'دسته بندی های شما';
-        $category = Category::with('post', 'gallery')->paginate(15);
-        return view('admin.category.index', compact('title', 'category'));
+        $title = 'پست های شما';
+        $post = Post::with('user')->paginate(15);
+        return view('admin.post.index', compact('title', 'post'));
     }
 
     /**
@@ -28,8 +28,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $title = 'ساخت دسته بندی';
-        return view('admin.category.create', compact('title'));
+        $title = 'ساخت پست جدیید';
+        return view('admin.post.create', compact('title'));
     }
 
     /**
@@ -40,16 +40,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-
         $data = $request->validate([
             'title' => 'required|max:250',
             'description' => 'nullable',
+            'category_id' => 'nullable',
             'gallery_id' => 'nullable',
         ]);
-        $data['slug'] = str_replace(' ', '-', $data['title']);
+        $data['slug']=str_replace(' ','-',$data['title']);
         $data['user_id'] = Auth::user()->id;
-
-        $data = Category::create($data);
+//        dd($data);
+        $data =Post::create($data);
         return back();
     }
 
@@ -72,9 +72,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $title='ادیت دسته بندی';
-        $category=Category::find($id);
-        return view('admin.category.edit',compact('title','category'));
+        dd($id);
     }
 
     /**
@@ -86,15 +84,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->validate([
-            'title' => 'required|max:250',
-            'description' => 'nullable',
-            'gallery_id' => 'nullable',
-        ]);
-        $data['slug'] = str_replace(' ', '-', $data['title']);
-        $data['user_id'] = Auth::user()->id;
-        $ssss=Category::find($id)->update($data);
-        return back();
+        //
     }
 
     /**
@@ -105,11 +95,6 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-//        dd($id);
-        $category = Category::find($id);
-//
-        $category->delete();
-        return back();
-
+        //
     }
 }

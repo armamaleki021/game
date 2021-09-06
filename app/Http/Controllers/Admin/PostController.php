@@ -46,10 +46,10 @@ class PostController extends Controller
             'category_id' => 'nullable',
             'gallery_id' => 'nullable',
         ]);
-        $data['slug']=str_replace(' ','-',$data['title']);
+        $data['slug'] = str_replace(' ', '-', $data['title']);
         $data['user_id'] = Auth::user()->id;
 //        dd($data);
-        $data =Post::create($data);
+        $data = Post::create($data);
         return back();
     }
 
@@ -72,7 +72,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        dd($id);
+        $title = 'اپدیت پست های شما';
+        $post = Post::find($id);
+        return view('admin.post.edit',compact('title', 'post'));
     }
 
     /**
@@ -84,7 +86,17 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required|max:250',
+            'description' => 'nullable',
+            'category_id' => 'nullable',
+            'gallery_id' => 'nullable',
+        ]);
+        $data['slug'] = str_replace(' ', '-', $data['title']);
+        $data['user_id'] = Auth::user()->id;
+//        dd($data);
+        $data = Post::find($id)->update($data);
+        return back();
     }
 
     /**

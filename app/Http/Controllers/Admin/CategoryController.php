@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -16,7 +17,7 @@ class CategoryController extends Controller
     public function index()
     {
         $title = 'دسته بندی های شما';
-        $category = Category::paginate(15);
+        $category = Category::with('post','gallery')->paginate(15);
         return view('admin.category.index', compact('title','category'));
     }
 
@@ -27,7 +28,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $title='ساخت دسته بندی';
+        return view('admin.category.create', compact('title'));
     }
 
     /**
@@ -38,7 +40,17 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $data=$request->validate([
+            'title'=>'required|max:250',
+            'description'=>'nullable',
+            'gallery_id'=>'nullable',
+        ]);
+        $data['slug']=str_replace(' ','-',$data['title']);
+        $data['user_id']=Auth::user()->id;
+
+$data=Category::create($data);
+return back();
     }
 
     /**

@@ -16,7 +16,8 @@ class GalleryController extends Controller
     public function index()
     {
         $title='گالری تصاویر';
-        $gallery=Gallery::paginate(15);
+        $gallery=Gallery::with('user')->paginate(15);
+//        dd($gallery);
         return view('admin.gallery.index',compact('title','gallery'));
     }
 

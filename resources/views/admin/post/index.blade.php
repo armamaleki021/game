@@ -69,7 +69,7 @@
                                             <td class="sorting_1">{{$po->id}}</td>
                                             <td class="sorting_1">{{$po->title}}</td>
                                             <td>{{ Illuminate\Support\Str::limit($po->description, 20) }}</td>
-                                            <td>{{$po->user_id}}</td>
+                                            <td>{{$po->user->name}}</td>
                                             <td class="actions">
                                                 <a href="#" class="hidden on-editing save-row"><i
                                                         class="fa fa-save"></i></a>

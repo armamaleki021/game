@@ -26,6 +26,24 @@
                             <textarea name="description" class="form-control" rows="5"></textarea>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Input Select</label>
+                        <div class="col-sm-10">
+                            <select name="gallery_id" class="form-control">
+                                <option value="1">gallery_id=1</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Input Select</label>
+                        <div class="col-sm-10">
+                            <select name="category_id" class="form-control">
+                                <option value="1">'category_id=1'</option>
+                            </select>
+
+                        </div>
+                    </div>
 
                     <label class="col-md-2  control-label"> </label>
 

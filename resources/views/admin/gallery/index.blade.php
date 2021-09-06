@@ -65,7 +65,7 @@
                                         <tr class="gradeA odd" role="row">
                                             <td class="sorting_1">{{$gal->title}}</td>
                                             <td>{{ Illuminate\Support\Str::limit($gal->description, 20) }}</td>
-                                            <td>{{$gal->user_id}}</td>
+                                            <td>{{$gal->user->name}}</td>
                                             <td class="actions">
                                                 <a href="#" class="hidden on-editing save-row"><i
                                                         class="fa fa-save"></i></a>

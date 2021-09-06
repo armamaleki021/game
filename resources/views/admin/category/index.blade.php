@@ -11,8 +11,8 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="m-b-30">
-                            <button id="addToTable" class="btn btn-primary waves-effect waves-light">Add <i
-                                    class="fa fa-plus"></i></button>
+                            <a id="addToTable" href="{{route('category.create')}}" class="btn btn-primary waves-effect waves-light">ساخت دسته بندی جدید <i
+                                    class="fa fa-plus"></i></a>
                         </div>
                     </div>
                 </div>
@@ -66,7 +66,8 @@
                                         <tr class="gradeA odd" role="row">
                                             <td class="sorting_1">{{$cat->title}}</td>
                                             <td>{{ Illuminate\Support\Str::limit($cat->description, 20) }}</td>
-                                            <td>{{$cat->user_id}}</td>
+                                            <td>{{$cat->user->name}}</td>
+                                            <td>{{$cat->gallery->title}}</td>
                                             <td class="actions">
                                                 <a href="#" class="hidden on-editing save-row"><i
                                                         class="fa fa-save"></i></a>

@@ -30,7 +30,7 @@ class GalleryController extends Controller
     public function create()
     {
         $title = 'ساخت گالری';
-        return view('admin.gallery.create',compact('title'));
+        return view('admin.gallery.create', compact('title'));
     }
 
     /**
@@ -41,15 +41,6 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
-        $data=$request->validate([
-            'title'=>'required|max:250',
-            'description'=>'required',
-            'alt'=>'required',
-
-        ]);
-        $data['slug']=str_replace(' ', '-' ,$data['title']);
-        $data['user_id']=Auth::user()->id;
-        $data=Gallery::create(@$data);
     }
 
     /**
@@ -71,9 +62,9 @@ class GalleryController extends Controller
      */
     public function edit($id)
     {
-        $title='ادیت گالری';
-        $gallery=Gallery::find($id);
-        return view('admin.gallery.edit' ,compact('title', 'gallery'));
+        $title = 'ادیت گالری';
+        $gallery = Gallery::find($id);
+        return view('admin.gallery.edit', compact('title', 'gallery'));
     }
 
     /**
@@ -85,16 +76,8 @@ class GalleryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data=$request->validate([
-            'title'=>'required|max:250',
-            'description'=>'required',
-            'alt'=>'required',
+        dd($id);
 
-        ]);
-        $data['slug']=str_replace(' ', '-' ,$data['title']);
-        $data['user_id']=Auth::user()->id;
-        $data=Gallery::find($id)->update(@$data);
-        return back();
     }
 
     /**
@@ -105,6 +88,25 @@ class GalleryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $gallery = Gallery::find($id);
+        $gallery->delete();
+
+        if (file_exists(public_path() . '/gallery/' . $gallery->image)) {
+            unlink(public_path() . '/gallery/' . $gallery->image);
+        }
+        return redirect()->back();
+    }
+
+    public function galleryImage(Request $request, $id)
+    {
+        $file = $request->file('file');
+        $file->move(public_path() . '/gallery/', time() . '.' . $file->getClientOriginalExtension());
+
+
+        $gallery = new Gallery();
+        $gallery->event_id = $id;
+        $gallery->image = time() . '.' . $file->getClientOriginalExtension();
+        $gallery->user_id = Auth::user()->id;
+        $gallery->save();
     }
 }

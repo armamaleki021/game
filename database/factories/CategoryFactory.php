@@ -23,10 +23,8 @@ class CategoryFactory extends Factory
     {
         return [
             'title' => $this->faker->title(),
-            'description' => $this->faker->realText(),
+            'body' => $this->faker->realText(),
             'slug' => $this->faker->title(),
-            'user_id' =>1,
-            'gallery_id' =>1,
 
 
         ];

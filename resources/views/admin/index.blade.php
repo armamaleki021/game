@@ -5,5 +5,5 @@
 @endsection
 
 @section('content')
-    index admin panel
+
 @endsection

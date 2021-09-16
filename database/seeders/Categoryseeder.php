@@ -15,10 +15,8 @@ class Categoryseeder extends Seeder
     {
         DB::table('galleries')->insert([
             'title' => Str::random(10),
-            'description' => Str::random(10),
+            'body' => Str::random(1000),
             'slug' => Str::random(10),
-            'user_id' =>1,
-            'gallery_id' =>1,
 
         ]);
     }

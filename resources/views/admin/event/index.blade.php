@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="m-b-30">
-                            <a href="{{route('post.create')}}" id="addToTable" class="btn btn-primary waves-effect waves-light">ارسال پست جدید <i
+                            <a href="{{route('event.create')}}" id="addToTable" class="btn btn-primary waves-effect waves-light">ارسال ایونت جدید <i
                                     class="fa fa-plus"></i></a>
                         </div>
                     </div>
@@ -45,38 +45,48 @@
                                     <tr role="row">
                                         <th class="sorting_asc" tabindex="0" aria-controls="datatable-editable"
                                             rowspan="1" colspan="1" style="width: 199px;" aria-sort="ascending"
-                                            aria-label="Rendering engine: activate to sort column descending">Rendering
-                                            engine
+                                            aria-label="Rendering engine: activate to sort column descending">ID
                                         </th>
                                         <th class="sorting" tabindex="0" aria-controls="datatable-editable" rowspan="1"
                                             colspan="1" style="width: 263px;"
-                                            aria-label="Browser: activate to sort column ascending">Browser
+                                            aria-label="Browser: activate to sort column ascending">title
                                         </th>
                                         <th class="sorting" tabindex="0" aria-controls="datatable-editable" rowspan="1"
                                             colspan="1" style="width: 239px;"
-                                            aria-label="Platform(s): activate to sort column ascending">Platform(s)
+                                            aria-label="Platform(s): activate to sort column ascending">description
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatable-editable" rowspan="1"
+                                            colspan="1" style="width: 239px;"
+                                            aria-label="Platform(s): activate to sort column ascending">category
                                         </th>
                                         <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 99px;"
-                                            aria-label="Actions">Actions
+                                            aria-label="Actions">user
                                         </th> <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 99px;"
                                             aria-label="Actions">Actions
                                         </th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($post as $po)
+                                    @foreach($event as $po)
                                         <tr class="gradeA odd" role="row">
                                             <td class="sorting_1">{{$po->id}}</td>
                                             <td class="sorting_1">{{$po->title}}</td>
-                                            <td>{{ Illuminate\Support\Str::limit($po->description, 20) }}</td>
+                                            <td>{!! Illuminate\Support\Str::limit($po->body, 50) !!}</td>
+                                            <td>
+{{--                                                @foreach($po->category as $category)--}}
+{{--                                                    <span class="btn btn-default" >{{$category->title}}</span>--}}
+{{--                                                @endforeach--}}
+                                            </td>
                                             <td>{{$po->user->name}}</td>
                                             <td class="actions">
-                                                <a href="#" class="hidden on-editing save-row"><i
-                                                        class="fa fa-save"></i></a>
-                                                <a href="#" class="hidden on-editing cancel-row"><i
-                                                        class="fa fa-times"></i></a>
-                                                <a href="{{route('post.edit', $po->id)}}" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-                                                <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+
+
+                                                <a href="{{route('event.edit', $po->id)}}" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                                <a onclick="event.preventDefault();document.getElementById('event-delete-{{$po->id}}').submit()" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                                                <form method="post" action="{{route('event.destroy', $po->id)}}" id="event-delete-{{$po->id}}">
+                                                    @csrf
+                                                    @method('delete')
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -90,7 +100,7 @@
                                      aria-live="polite">Showing 1 to 10 of 57 entries
                                 </div>
                             </div>
-                            {{$post->links()}}
+                            {{$event->links()}}
                         </div>
                     </div>
                 </div>

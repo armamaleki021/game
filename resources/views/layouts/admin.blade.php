@@ -18,8 +18,10 @@
     <link href="{{asset('assets/css/components.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{asset('assets/css/icons.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{asset('assets/css/pages.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{asset('assets/css/dropzone.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{asset('assets/css/menu.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{asset('assets/css/responsive.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{asset('assets/plugins/select2/dist/css/select2.css')}}" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -116,9 +118,16 @@
                     </li>
 
                     <li>
-                        <a href="#" class="text-custom">
+
+                        <a class="dropdown-item" href="#"
+                           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
                             <i class="zmdi zmdi-power"></i>
                         </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
                     </li>
                 </ul>
             </div>
@@ -136,9 +145,9 @@
                     </li>
 
                     <li>
-                        <a href="{{route('post.index')}}" class="waves-effect"><i
+                        <a href="{{route('event.index')}}" class="waves-effect"><i
                                 class="zmdi zmdi-format-underlined"></i>
-                            <span> پست ها </span> </a>
+                            <span> ایونت ها </span> </a>
                     </li>
 
                     <li>
@@ -162,9 +171,6 @@
 
                         </ul>
                     </li>
-
-
-
 
 
                 </ul>
@@ -301,6 +307,7 @@
 </script>
 
 <!-- jQuery  -->
+
 <script src="{{asset('assets/js/jquery.min.js')}}"></script>
 <script src="{{asset('assets/js/bootstrap-rtl.min.js')}}"></script>
 <script src="{{asset('assets/js/detect.js')}}"></script>
@@ -308,12 +315,14 @@
 <script src="{{asset('assets/js/jquery.slimscroll.js')}}"></script>
 <script src="{{asset('assets/js/jquery.blockUI.js')}}"></script>
 <script src="{{asset('assets/js/waves.js')}}"></script>
+<script src="{{asset('assets/js/dropzone.js')}}"></script>
 <script src="{{asset('assets/js/jquery.nicescroll.js')}}"></script>
 <script src="{{asset('assets/js/jquery.scrollTo.min.js')}}"></script>
 
 <!-- App js -->
 <script src="{{asset('assets/js/jquery.core.js')}}"></script>
 <script src="{{asset('assets/js/jquery.app.js')}}"></script>
-
+<script src="{{asset('assets/plugins/select2/dist/js/select2.min.js')}}" type="text/javascript"></script>
+@yield('js')
 </body>
 </html>

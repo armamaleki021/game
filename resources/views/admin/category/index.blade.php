@@ -65,9 +65,7 @@
                                     @foreach($category as $cat)
                                         <tr class="gradeA odd" role="row">
                                             <td class="sorting_1">{{$cat->title}}</td>
-                                            <td>{{ Illuminate\Support\Str::limit($cat->description, 20) }}</td>
-                                            <td>{{$cat->user->name}}</td>
-                                            <td>{{$cat->gallery->title}}</td>
+                                            <td>{{ Illuminate\Support\Str::limit($cat->body, 20) }}</td>
                                             <td class="actions">
 
                                                 <a href="{{route('category.edit',$cat->id)}}" class="on-default edit-row"><i class="fa fa-pencil"></i></a>

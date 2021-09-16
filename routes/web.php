@@ -22,9 +22,10 @@ Auth::routes();
 
 Route::prefix('admin')->namespace('Admin')->middleware('is_admin')->group(function () {
     Route::resource('/', 'AdminController');
-    Route::resource('/post', 'PostController');
+    Route::resource('/event', 'EventController');
     Route::resource('/gallery', 'GalleryController');
     Route::resource('/category', 'CategoryController');
+    Route::post('/gallery/gallery-image/{id}', 'GalleryController@galleryImage')->name('gallery.image');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

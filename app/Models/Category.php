@@ -10,25 +10,19 @@ class Category extends Model
     use HasFactory;
     protected $fillable=[
         'title',
-        'description',
+        'body',
         'slug',
         'gallery_id',
         'user_id',
 
     ];
 
-    public function user()
+
+
+
+    public function event()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(Event::class   );
     }
 
-    public function gallery()
-    {
-        return $this->belongsTo(Gallery::class);
-    }
-
-    public function post()
-    {
-        return $this->belongsTo(Post::class);
-    }
 }

@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Post;
+
+//use App\Models\Category;
+use App\Models\Category;
+use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class PostController extends Controller
+class EventController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +20,10 @@ class PostController extends Controller
     public function index()
     {
         $title = 'پست های شما';
-        $post = Post::with('user')->paginate(15);
-        return view('admin.post.index', compact('title', 'post'));
+        $event = Event::with('user')->paginate(15);
+        $category = Category::with('category');
+
+        return view('admin.event.index', compact('title', 'event','category'));
     }
 
     /**
@@ -29,7 +34,8 @@ class PostController extends Controller
     public function create()
     {
         $title = 'ساخت پست جدیید';
-        return view('admin.post.create', compact('title'));
+        $category = Category::all();
+        return view('admin.event.create', compact('title','category'));
     }
 
     /**
@@ -40,17 +46,23 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+
         $data = $request->validate([
             'title' => 'required|max:250',
-            'description' => 'nullable',
-            'category_id' => 'nullable',
-            'gallery_id' => 'nullable',
+            'body' => 'nullable',
+            'category' => 'nullable'
         ]);
+
         $data['slug'] = str_replace(' ', '-', $data['title']);
         $data['user_id'] = Auth::user()->id;
 //        dd($data);
-        $data = Post::create($data);
-        return back();
+        $event = Event::create($data);
+
+//@todo
+        foreach ($request->category(id) as $cat) {
+            $event->category()->attach($cat);
+        }
+        return redirect()->route('event.edit', $event->id);
     }
 
     /**
@@ -73,8 +85,9 @@ class PostController extends Controller
     public function edit($id)
     {
         $title = 'اپدیت پست های شما';
-        $post = Post::find($id);
-        return view('admin.post.edit',compact('title', 'post'));
+        $event = Event::with('user')->find($id);
+
+        return view('admin.event.edit', compact('title', 'event'));
     }
 
     /**
@@ -86,16 +99,20 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+//        @todo
         $data = $request->validate([
             'title' => 'required|max:250',
-            'description' => 'nullable',
-            'category_id' => 'nullable',
-            'gallery_id' => 'nullable',
+            'body' => 'nullable',
         ]);
+
+
         $data['slug'] = str_replace(' ', '-', $data['title']);
         $data['user_id'] = Auth::user()->id;
-//        dd($data);
-        $data = Post::find($id)->update($data);
+
+        $event = Event::find($id);
+        $event->update($data);
+//        $event->category()->sync($request->category);
+
         return back();
     }
 
@@ -107,6 +124,10 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // @todo
+        $event = Event::find($id)->delete();
+
+        return back();
+
     }
 }

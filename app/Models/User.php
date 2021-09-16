@@ -44,18 +44,11 @@ class User extends Authenticatable
     ];
 
 
-    public function posts()
-    {
-        return $this->hasMany(Post::class);
-    }
+
 
     public function gallery()
     {
         return $this->hasMany(Gallery::class);
     }
 
-    public function category()
-    {
-        return $this->hasMany(Category::class);
-    }
 }

@@ -17,7 +17,7 @@ class CategoryController extends Controller
     public function index()
     {
         $title = 'دسته بندی های شما';
-        $category = Category::with('post', 'gallery')->paginate(15);
+        $category = Category::paginate(15);
         return view('admin.category.index', compact('title', 'category'));
     }
 
@@ -40,17 +40,17 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request->toArray());
 
         $data = $request->validate([
             'title' => 'required|max:250',
-            'description' => 'nullable',
-            'gallery_id' => 'nullable',
+            'body' => 'nullable',
         ]);
         $data['slug'] = str_replace(' ', '-', $data['title']);
-        $data['user_id'] = Auth::user()->id;
 
         $data = Category::create($data);
-        return back();
+
+        return redirect()->route('category.edit', $data->id);
     }
 
     /**
@@ -72,9 +72,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $title='ادیت دسته بندی';
-        $category=Category::find($id);
-        return view('admin.category.edit',compact('title','category'));
+        $title = 'ادیت دسته بندی';
+        $category = Category::find($id);
+        return view('admin.category.edit', compact('title', 'category'));
     }
 
     /**
@@ -86,14 +86,13 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+//        dd($request->toArray());
         $data = $request->validate([
             'title' => 'required|max:250',
-            'description' => 'nullable',
-            'gallery_id' => 'nullable',
+            'body' => 'nullable',
         ]);
         $data['slug'] = str_replace(' ', '-', $data['title']);
-        $data['user_id'] = Auth::user()->id;
-        $ssss=Category::find($id)->update($data);
+        Category::find($id)->update($data);
         return back();
     }
 
